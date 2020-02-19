@@ -44,8 +44,7 @@ namespace IfxWebAPI.Controllers
         }
 
         [HttpPost]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")]//Requiere Autorización
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")]//Requiere Autorización
         public ActionResult Post([FromBody] Empleado empleado)
         {
             context.Empleados.Add(empleado);//Agrega Empleado en Base de datos
@@ -55,8 +54,7 @@ namespace IfxWebAPI.Controllers
 
         //Actualiza Recurso Empleado
         [HttpPut("{id}")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")]//Requiere Autorizacion
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")]//Requiere Autorizacion
         public ActionResult Put(int id, [FromBody] Empleado empleado)//Parametros Id de la URL y Empleados del cuerpo
         {
             if (id != empleado.Id) //Si no coincide el id con el parametro se retorna un bad request
@@ -71,8 +69,7 @@ namespace IfxWebAPI.Controllers
 
 
         [HttpDelete("{id}")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")]//requiere autorizacion
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")]//requiere autorizacion
         public ActionResult<Empleado> Delete(int id) //Recibe parámetro de la URL
         {
             var empleado = context.Empleados.FirstOrDefault(x => x.Id == id); //Se busca entidad en la base de datos

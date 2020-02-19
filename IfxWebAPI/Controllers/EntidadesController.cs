@@ -15,7 +15,7 @@ namespace IfxWebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")]//Requiere Autorizacion
+
     public class EntidadesController : ControllerBase
     {
         private readonly ApplicationDbContext context;
@@ -41,8 +41,6 @@ namespace IfxWebAPI.Controllers
         [HttpGet("{id}", Name = "ObtenerEntidad")]
         public async Task<ActionResult<EntidadDTO>> Get(int id)
         {
-            //Valida si existe Id igual al parámetro recibido.
-            //var entidad = context.Entidades.FirstOrDefault(x => x.ID == id);
             var entidad = await context.Entidades.Include(x => x.Empleados).FirstOrDefaultAsync(x => x.ID == id);
             if (entidad == null)
             {
@@ -55,7 +53,7 @@ namespace IfxWebAPI.Controllers
         }
 
         [HttpPost]
-        [Authorize (AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]//Requiere Autorizacion
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")]//Requiere Autorizacion
         public async Task<ActionResult> Post([FromBody] Entidad entidades)
         {
             context.Entidades.Add(entidades);//Agrega Autor en Base de datos
@@ -67,8 +65,7 @@ namespace IfxWebAPI.Controllers
 
         //Actualiza Recurso Entidad
         [HttpPut("{id}")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        //[Authorize (AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")]//Requiere Autorizacion
+        [Authorize (AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")]//Requiere Autorizacion
         public async Task<ActionResult> Put(int id, [FromBody] Entidad Value)//Parametros Id de la URL y Entidades del cuerpo
         {
             if (id != Value.ID) //Si no coincide el id con el parametro se retorna un bad request
@@ -82,8 +79,7 @@ namespace IfxWebAPI.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        //[Authorize (AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")]//Requiere Autorizacion
+        [Authorize (AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")]//Requiere Autorizacion
         public ActionResult<Entidad> Delete(int id) //Recibe parámetro de la URL
         {
             var entidad = context.Entidades.FirstOrDefault(x => x.ID == id); //Se busca entidad en la base de datos
