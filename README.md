@@ -5,6 +5,6 @@
 #Permite asignar varios empleados a una entidad y genera una lista de empleados por entidad a través de PostMan.
 #Se utiliza Entity Framework para la creación de la base de datos y sus tablas.
 #Utiliza programación asincrona en las acciones relacionadas con bases de datos.
+#Se integra JWT para el manejo de accesos, usuarios y roles. Se modifican las acciones POST, PUT y DELETE para que solo puedan ser utilizadas por el perfil admin.
 PENDIENTES:
-#No se ha logrado integrar la validación con JWT ya que esto requiere un nuevo DbContext para la generación de tablas de usuarios y logins.
 #Falta front-end en angular.
